@@ -19,7 +19,7 @@ namespace LINQ
             
         }
 
-        public NhanVien(int id_332, string name_332, int age_332, int salary_33, int idDepartment_332)
+        public NhanVien(int id_332, string name_332, int age_332, int salary_332, int idDepartment_332)
         {
             this.id_332 = id_332;
             this.name_332 = name_332;

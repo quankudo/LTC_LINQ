@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LINQ
@@ -40,6 +41,8 @@ namespace LINQ
             };
 
             Display(danhSachNhanVien, danhSachPhongBan);
+            GetEmployee(danhSachNhanVien, danhSachPhongBan);
+            Console.WriteLine($"Lương trung bình của công ty: {GetAverageSalary(danhSachNhanVien)} nghìn vnd");
             Console.ReadKey();
         }
 
@@ -62,6 +65,42 @@ namespace LINQ
             {
                 Console.WriteLine($"Nhân viên {item.id_332}: {item.name_332} -- phòng ban {item.TenPhongBan}");
             }
+        }
+
+        public static void GetEmployee(List<NhanVien> nhanViens, List<PhongBan> phongBans)
+        {
+            var ls = nhanViens
+                .GroupBy(nv=>nv.idDepartment_332)
+                .Join(
+                phongBans,
+                nv => nv.Key,
+                pb => pb.id_332,
+                (nv, pb) => new
+                {
+                    TenPhongBan = pb.name_332,
+                    TreNhat = nv.OrderBy(n => n.age_332).FirstOrDefault(),
+                    GiaNhat = nv.OrderByDescending(n => n.age_332).FirstOrDefault(),
+                    TuoiTrungBinh = nv.Average(n => n.age_332)
+                });
+
+            Console.WriteLine("Danh sách nhân viên từng phòng theo tuổi:");
+            foreach (var phongBan in ls)
+            {
+                Console.WriteLine($"\nPhòng Ban: {phongBan.TenPhongBan}");
+                Console.WriteLine($"- Nhân viên trẻ nhất: {phongBan.TreNhat.name_332}, {phongBan.TreNhat.age_332} tuổi");
+                Console.WriteLine($"- Nhân viên già nhất: {phongBan.GiaNhat.name_332}, {phongBan.GiaNhat.age_332} tuổi");
+                Console.WriteLine($"- Tuổi trung bình: {phongBan.TuoiTrungBinh:F2}");
+            }
+        }
+
+        public static double GetAverageSalary(List<NhanVien> nhanViens)
+        {
+            double sum = 0;
+            foreach (var item in nhanViens)
+            {
+                sum += item.salary_332;
+            }
+            return sum/nhanViens.Count;
         }
     }
 }

@@ -27,5 +27,10 @@ namespace LINQ
             this.salary_332 = salary_332;
             this.idDepartment_332 = idDepartment_332;
         }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"ID: {id_332} - Tên: {name_332} - Tuổi: {age_332}");
+        }
     }
 }

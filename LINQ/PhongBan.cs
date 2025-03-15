@@ -21,5 +21,10 @@ namespace LINQ
             this.id_332 = id_332;
             this.name_332 = name_332;
         }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Tên phòng ban: {name_332}");
+        }
     }
 }
